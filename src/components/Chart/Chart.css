@@ -1,2 +1,26 @@
-.chart {
+.chart__container {
+  display: flex;
+}
+
+.recharts-bar-rectangle:hover {
+  fill-opacity: 0.5;
+  fill: #ed765e;
+  transition: fill-opacity 0.1s ease;
+  cursor: pointer;
+}
+
+.recharts-tooltip-cursor {
+  display: none;
+  transform: none;
+  transition: none;
+}
+
+.tooltip {
+  background-color: var(--dark-brown);
+  color: var(--pale-orange);
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  top: 0;
+  left: 0;
 }

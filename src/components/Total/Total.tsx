@@ -1,17 +1,20 @@
-// import "./Total.css";
+import "./Total.css";
 
 const Total = () => {
   return (
-    <div className="total">
-      <div className="">
-        <h2 className="">Total this month</h2>
-        <p className="total__text">$478.33</p>
+    <>
+      <hr />
+      <div className="total">
+        <div className="left">
+          <h2 className="total__text grey">Total this month</h2>
+          <p className="total__nb">$478.33</p>
+        </div>
+        <div className="right">
+          <p className="total__text">+2.4%</p>
+          <p className="total__text grey">from last month</p>
+        </div>
       </div>
-      <div className="">
-        <p className="total__text">+2.4%</p>
-        <p className="total__text">from last month</p>
-      </div>
-    </div>
+    </>
   );
 };
 
