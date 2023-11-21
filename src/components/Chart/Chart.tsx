@@ -6,6 +6,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 import data from "./../../../data/data.json";
 
@@ -13,11 +14,6 @@ interface ChartProps {
   day: string;
   amount: number;
 }
-
-const currentDay = new Date()
-  .toLocaleDateString("en-US", { weekday: "short" })
-  .toLowerCase();
-console.log(currentDay);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomTooltip = ({ active, payload }: any) => {
@@ -35,9 +31,14 @@ const CustomTooltip = ({ active, payload }: any) => {
 const Chart = () => {
   const chartData: ChartProps[] = data;
 
+  const currentDay = new Date()
+    .toLocaleDateString("en-US", { weekday: "short" })
+    .toLowerCase();
+  console.log(currentDay);
+
   return (
     <div className="chart__container">
-      <ResponsiveContainer height={225}>
+      <ResponsiveContainer height={180}>
         <BarChart data={chartData} barCategoryGap={10}>
           <XAxis
             dataKey="day"
@@ -47,7 +48,18 @@ const Chart = () => {
           />
           <YAxis hide={true} />
           <Tooltip content={CustomTooltip} />
-          <Bar dataKey="amount" fill="#ed765e" radius={[5, 5, 5, 5]} />
+          <Bar dataKey="amount" radius={[5, 5, 5, 5]}>
+            {chartData.map((entry, index) => (
+              <Cell
+                key={index}
+                fill={
+                  entry.day === currentDay && entry.amount > 0
+                    ? "#75b6bd"
+                    : "#ed765e"
+                }
+              />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>
