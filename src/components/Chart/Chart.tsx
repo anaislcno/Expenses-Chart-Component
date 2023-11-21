@@ -35,6 +35,7 @@ const Chart = () => {
   const [radius, setRadius] = useState<[number, number, number, number]>([
     5, 5, 5, 5,
   ]);
+  const [height, setHeight] = useState(180);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,9 +43,11 @@ const Chart = () => {
       if (mq.matches) {
         setBarCategoryGap(5);
         setRadius([3, 3, 3, 3]);
+        setHeight(220);
       } else {
         setBarCategoryGap(10);
         setRadius([5, 5, 5, 5]);
+        setHeight(180);
       }
     };
 
@@ -63,7 +66,7 @@ const Chart = () => {
 
   return (
     <div className="chart__container">
-      <ResponsiveContainer height={180}>
+      <ResponsiveContainer height={height}>
         <BarChart data={chartData} barCategoryGap={barCategoryGap}>
           <XAxis
             dataKey="day"
