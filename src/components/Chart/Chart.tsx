@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { useEffect, useState } from "react";
 import data from "./../../../data/data.json";
 
 interface ChartProps {
@@ -30,6 +31,30 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const Chart = () => {
   const chartData: ChartProps[] = data;
+  const [barCategoryGap, setBarCategoryGap] = useState(10);
+  const [radius, setRadius] = useState<[number, number, number, number]>([
+    5, 5, 5, 5,
+  ]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mq = window.matchMedia("(max-width: 768px)");
+      if (mq.matches) {
+        setBarCategoryGap(5);
+        setRadius([3, 3, 3, 3]);
+      } else {
+        setBarCategoryGap(10);
+        setRadius([5, 5, 5, 5]);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const currentDay = new Date()
     .toLocaleDateString("en-US", { weekday: "short" })
@@ -39,7 +64,7 @@ const Chart = () => {
   return (
     <div className="chart__container">
       <ResponsiveContainer height={180}>
-        <BarChart data={chartData} barCategoryGap={10}>
+        <BarChart data={chartData} barCategoryGap={barCategoryGap}>
           <XAxis
             dataKey="day"
             axisLine={false}
@@ -48,7 +73,7 @@ const Chart = () => {
           />
           <YAxis hide={true} />
           <Tooltip content={CustomTooltip} />
-          <Bar dataKey="amount" radius={[5, 5, 5, 5]}>
+          <Bar dataKey="amount" radius={radius}>
             {chartData.map((entry, index) => (
               <Cell
                 key={index}
